@@ -44,13 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-	'rest_framework',
+    'rest_framework',
     'rest_framework.authtoken',
-	'corsheaders',
+    'corsheaders',
     'djoser',
     'channels',
     'django_celery_results',
 
+    'audio',
     'udon_back',
     'radio',
     'upload'

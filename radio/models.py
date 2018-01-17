@@ -3,6 +3,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
 import datetime
+from audio.models import Audio
 
 class Schedule(models.Model):
 
@@ -108,3 +109,6 @@ class Song(models.Model):
         on_delete=models.CASCADE
     )
     play_count = models.IntegerField(default=0)
+    audio = models.OneToOneField(
+        Audio, on_delete=models., null=True
+    )

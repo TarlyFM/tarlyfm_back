@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from UDON_scripts.song_manager import download, postprocess
-from .models import FileUpload
+from .models import Audio
 from channels import Group
 import json
 import celery
@@ -13,7 +13,7 @@ import os
 #throws: expected errors
 @shared_task(bind=True, throws=())
 def process_fileupload(self, pk):
-    obj = FileUpload.objects.get(pk=pk)
+    obj = Audio.objects.get(pk=pk)
     if not self.request.called_directly:
         result, created = TaskResult.objects.get_or_create(task_id=self.request.id)
         obj.task = result

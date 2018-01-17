@@ -2,20 +2,20 @@ from rest_framework import mixins, viewsets
 from django_celery_results.models import TaskResult
 
 from udon_back.permissions import IsAdherentUser
-from .serializers import FileUploadCreateRetrieveSerializer
-from .models import FileUpload
+from .serializers import AudioCreateRetrieveSerializer
+from .models import Audio
 from .tasks import process_fileupload
 
-class FileUploadViewSet(mixins.CreateModelMixin,
+class AudioViewSet(mixins.CreateModelMixin,
                         mixins.ListModelMixin,
                         viewsets.GenericViewSet):
 
     permission_classes = [IsAdherentUser,]
-    serializer_class = FileUploadCreateRetrieveSerializer
+    serializer_class = AudioCreateRetrieveSerializer
 
     def get_queryset(self):
         dic = {}
-        for related in FileUpload.CONTENT_RELATED_FIELDS:
+        for related in Audio.CONTENT_RELATED_FIELDS:
             dic[related] = None
         return self.request.user.fileupload_set.filter(**dic)
 

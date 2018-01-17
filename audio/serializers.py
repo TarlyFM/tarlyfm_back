@@ -1,19 +1,16 @@
 from rest_framework import serializers
-from .models import FileUpload
+from .models import Audio
 
-class FileUploadCreateRetrieveSerializer(serializers.ModelSerializer):
+class AudioCreateRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = FileUpload
+        model = Audio
         fields = ('id', 'up_from', 'audio', 'processed', 'created', 'base_name')
-        read_only_fields = ('processed', 'created')
+        read_only_fields = ('processed', 'created', 'base_name')
         extra_kwargs = {
             'audio': {
                 'write_only': True,
             },
-            'base_name': {
-                'read_only': True,
-            }
         }
 
     def validate(self, data):
