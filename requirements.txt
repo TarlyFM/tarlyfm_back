@@ -11,7 +11,7 @@ django-cors-headers
 djoser
 
 channels
-asgi_redis
+channels_redis
 
 celery
 django_celery_results

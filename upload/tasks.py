@@ -2,7 +2,8 @@ from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from UDON_scripts.song_manager import download, postprocess
 from .models import FileUpload
-from channels import Group
+from channels.layers import get_channel_layer
+from asgiref.sync import AsyncToSync
 import json
 import celery
 from django_celery_results.models import TaskResult
@@ -28,11 +29,13 @@ def process_fileupload(self, pk):
     )
     obj.processed = True
     obj.save()
-    Group("upload-subscribe".format(obj.pk)).send({
-        "text": json.dumps({
+    channel_layer = get_channel_layer()
+    AsyncToSync(channel_layer.group_send)(
+        "upload-subscribe",
+        json.dumps({
             "action": "upload-processed",
             "args": {
                 "id": obj.pk
             }
         })
-    })
+    )

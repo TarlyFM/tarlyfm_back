@@ -76,17 +76,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     #XXX: 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_ALLOW_ALL=True
-ROOT_URLCONF = 'udon_back.urls'
+
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             'hosts': [(REDIS_HOST, 6379)]
         },
-        'ROUTING': 'udon_back.routing.channel_routing',
     }
 }
+
+CORS_ORIGIN_ALLOW_ALL=True
+ROOT_URLCONF = 'udon_back.urls'
 
 TEMPLATES = [
     {
@@ -105,6 +106,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'udon_back.wsgi.application'
+ASGI_APPLICATION = 'udon_back.routing.application'
 
 
 # Database
